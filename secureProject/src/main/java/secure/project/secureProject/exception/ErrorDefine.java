@@ -23,10 +23,10 @@ public enum ErrorDefine {
 
     // NOT_FOUND: 404
     USER_NOT_FOUND("4040", HttpStatus.NOT_FOUND, "Not Found: User Not Found"),
-
+    ITEM_NOT_FOUND("4041", HttpStatus.NOT_FOUND, "Not Found: Item Not Found"),
     // CONFLICT: 409
     EMAIL_EXIST("4090", HttpStatus.CONFLICT, "Conflict: An account with this email already exists."),
-
+    ITEM_EXIST("4091", HttpStatus.CONFLICT, "Conflict: An item with this item already exists"),
     // GONE: 410
     USER_DELETE("4010", HttpStatus.GONE, "GONE: User delete data"),
     USER_EXPEL("4011", HttpStatus.GONE, "GONE: USER expelled"),
