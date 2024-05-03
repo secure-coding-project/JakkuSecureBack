@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "ITEM_TB")
 @Entity
@@ -33,6 +34,11 @@ public class Item {
     @Column(nullable = false)
     private LocalDate updateAt;
 
+    //--------------------------------------------------------------
+
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY)
+    private List<Basket> basketList;
+
     //-----------------------------------------------------------
 
     @Builder
@@ -42,6 +48,12 @@ public class Item {
         this.itemAmount = itemAmount;
         this.imageUrl = imageUrl;
         this.updateAt = updateAt;
+    }
+
+    //-----------------------------------------------------------
+
+    public void updateAdminItemAmount(Integer itemAmount) {
+        this.itemAmount = itemAmount;
     }
 
 }

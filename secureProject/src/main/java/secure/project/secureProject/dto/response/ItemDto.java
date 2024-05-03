@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import secure.project.secureProject.domain.Item;
 
 @Getter
-@NoArgsConstructor
+@Builder
 public class ItemDto {
     private Long itemId;
 
@@ -20,12 +20,4 @@ public class ItemDto {
 
     //--------------------------------------------------
 
-    @Builder
-    public ItemDto(Item item) {
-        this.itemId = item.getId();
-        this.itemName = item.getItemName();
-        this.itemAmount = item.getItemAmount();
-        this.itemPrice = item.getItemPrice();
-        this.imageUrl = item.getImageUrl();
-    }
 }

@@ -20,13 +20,14 @@ public class CustomerItemController {
     private final CustomerItemService customerItemService;
 
     @GetMapping("/item")
-    public ResponseDto<List<ItemDto>> selectCustomerItem(
+    public ResponseDto<Map<String, Object>> selectCustomerItem(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "5") Integer size,
+            @RequestParam(name = "size", defaultValue = "3") Integer size,
             @RequestParam(name = "latest", defaultValue = "desc") String latest,
             @RequestParam(name = "price", defaultValue = "desc") String price,
             @RequestParam(name = "searchName", required = false) String searchName
     ){
+
         return new ResponseDto<>(customerItemService.selectCustomerItem(page, size, latest, price, searchName));
     }
 }
