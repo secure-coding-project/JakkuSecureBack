@@ -39,4 +39,9 @@ public class Basket {
         this. itemId = itemId;
     }
 
+
+    public void updateAdminItemAmount(Integer basketItemAmount) {
+        this.basketItemAmount = basketItemAmount;
+    }
+
 }

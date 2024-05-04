@@ -1,16 +1,12 @@
 package secure.project.secureProject.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import secure.project.secureProject.dto.response.ItemDto;
+import org.springframework.web.bind.annotation.*;
+import secure.project.secureProject.dto.reqeust.BasketAddItemRequestDto;
 import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.service.CustomerItemService;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,5 +25,20 @@ public class CustomerItemController {
     ){
 
         return new ResponseDto<>(customerItemService.selectCustomerItem(page, size, latest, price, searchName));
+    }
+
+    @PostMapping("/addItem")
+    public ResponseDto<Boolean> addItemToBasket(
+            @Valid @RequestBody BasketAddItemRequestDto basketAddItem
+            ) {
+        return new ResponseDto<>(customerItemService.addItemToBasket(basketAddItem));
+    }
+
+    @GetMapping("/basket")
+    public ResponseDto<Map<String, Object>> selectBasketItem(
+            @RequestParam(name = "amount", defaultValue = "desc") String amount,
+            @RequestParam(name = "price", defaultValue = "desc") String price
+    ) {
+        return new ResponseDto<>(customerItemService.selectBasketItem(amount, price));
     }
 }
