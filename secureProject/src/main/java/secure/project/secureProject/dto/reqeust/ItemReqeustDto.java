@@ -11,5 +11,4 @@ public class ItemReqeustDto {
     private String itemName;
     private Integer itemAmount;
     private Integer itemPrice;
-    private String imageUrl;
 }
