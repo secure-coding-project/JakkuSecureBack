@@ -36,7 +36,7 @@ public class Basket {
     public Basket(Integer basketItemAmount, User userId, Item itemId) {
         this.basketItemAmount = basketItemAmount;
         this.userId = userId;
-        this. itemId = itemId;
+        this.itemId = itemId;
     }
 
 

@@ -4,9 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import secure.project.secureProject.dto.reqeust.BasketAddItemRequestDto;
+import secure.project.secureProject.dto.reqeust.BasketRequestDto;
+import secure.project.secureProject.dto.reqeust.CustomerOrderItemRequestDto;
+import secure.project.secureProject.dto.response.BasketDto;
 import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.service.CustomerItemService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,9 +40,15 @@ public class CustomerItemController {
 
     @GetMapping("/basket")
     public ResponseDto<Map<String, Object>> selectBasketItem(
-            @RequestParam(name = "amount", defaultValue = "desc") String amount,
-            @RequestParam(name = "price", defaultValue = "desc") String price
-    ) {
-        return new ResponseDto<>(customerItemService.selectBasketItem(amount, price));
+           @Valid @RequestBody BasketRequestDto basketRequestDto
+            ) {
+        return new ResponseDto<>(customerItemService.selectBasketItem(basketRequestDto));
+    }
+
+    @PatchMapping("/payment")
+    public ResponseDto<Boolean> paymentItem(
+            @Valid @RequestBody List<CustomerOrderItemRequestDto> customerOrderItemRequestDto
+            ) {
+        return new ResponseDto<>(customerItemService.paymentItem(customerOrderItemRequestDto));
     }
 }
