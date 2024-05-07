@@ -24,6 +24,7 @@ public enum ErrorDefine {
     // NOT_FOUND: 404
     USER_NOT_FOUND("4040", HttpStatus.NOT_FOUND, "Not Found: User Not Found"),
     ITEM_NOT_FOUND("4041", HttpStatus.NOT_FOUND, "Not Found: Item Not Found"),
+    BASKET_IS_EMPTY("4042", HttpStatus.NOT_FOUND, "Not Found: Basket is Empty"),
     // CONFLICT: 409
     EMAIL_EXIST("4090", HttpStatus.CONFLICT, "Conflict: An account with this email already exists."),
     ITEM_EXIST("4091", HttpStatus.CONFLICT, "Conflict: An item with this item already exists"),
@@ -32,8 +33,9 @@ public enum ErrorDefine {
     USER_EXPEL("4011", HttpStatus.GONE, "GONE: USER expelled"),
 
     // INTERNAL_SERER_ERROR: 500
-    SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Server Error: Internal server error");
-
+    SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Server Error: Internal server error"),
+    FILE_CONVERT_ERROR("5001", HttpStatus.INTERNAL_SERVER_ERROR, "Server Error: Internal file convert error"),
+    FILE_UPLOAD_ERROR("5002", HttpStatus.INTERNAL_SERVER_ERROR, "Server Error: Internal file upload error");
     private final String errorCode;
     private final HttpStatus httpStatus;
     private final String message;
