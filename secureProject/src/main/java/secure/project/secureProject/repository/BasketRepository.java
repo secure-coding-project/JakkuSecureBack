@@ -19,7 +19,7 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
 
     Optional<Basket> findByUserId(User user, Sort sort);
 
-    Basket findByItemIdAndUserId(Item item, User user);
+    Optional<Basket> findByItemIdAndUserId(Item item, User user);
 
     @Query(value = "SELECT b, i FROM Basket b JOIN FETCH b.itemId i where b.userId = :user")
     List<Basket> findBasketsByUserIdWithItem(User user);

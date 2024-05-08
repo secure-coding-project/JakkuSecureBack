@@ -3,11 +3,11 @@ package secure.project.secureProject.dto.reqeust;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import secure.project.secureProject.enums.OrderState;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomerOrderItemRequestDto {
-    private Long itemId;
-    private Integer buyItemAmount;
+public class AdminRegisterRequestDto {
+    private OrderState orderState;
 }
