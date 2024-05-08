@@ -53,4 +53,9 @@ public class User {
         this.createAt = LocalDate.now();
         this.updateAt = updateAt;
     }
+
+
+    //-----------------------------------------------------------
+
+    public void updatePoint(Long point){this.point = point;}
 }
