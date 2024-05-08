@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import secure.project.secureProject.dto.reqeust.AdminRegisterRequestDto;
 import secure.project.secureProject.dto.reqeust.ItemAddAmountRequestDto;
 import secure.project.secureProject.dto.reqeust.ItemReqeustDto;
 import secure.project.secureProject.dto.response.ResponseDto;
@@ -52,5 +53,30 @@ public class AdminItemController {
             @RequestPart(value = "image") MultipartFile multipartFile
     ) {
         return new ResponseDto<>(adminItemService.testimage(multipartFile));
+    }
+
+    @GetMapping("/pickup")
+    public ResponseDto<Map<String,Object>> selectPickup(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "3") Integer size,
+            @RequestParam(name = "latest", defaultValue = "desc") String latest,
+            @RequestParam(name = "status", defaultValue = "desc") String status
+    ) {
+        return new ResponseDto<>(adminItemService.selectPickup(page, size, latest, status));
+    }
+
+    @GetMapping("/pickup/detail/{orderId}")
+    public ResponseDto<Map<String, Object>> selectPickupDetailItem(
+            @PathVariable Long orderId
+    ) {
+        return new ResponseDto<>(adminItemService.selectPickupDetailItem(orderId));
+    }
+
+    @PatchMapping("/pickup/register/{orderId}")
+    public ResponseDto<Boolean> adminPickupRegister(
+            @PathVariable Long orderId,
+            @RequestBody AdminRegisterRequestDto adminRegisterRequestDto
+            ) {
+        return new ResponseDto<>(adminItemService.adminPickupRegister(orderId, adminRegisterRequestDto));
     }
 }
