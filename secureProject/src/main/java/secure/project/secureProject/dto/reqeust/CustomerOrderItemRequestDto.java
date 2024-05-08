@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CustomerOrderItemRequestDto {
-    private Long userId;
     private Long itemId;
     private Integer buyItemAmount;
 }
