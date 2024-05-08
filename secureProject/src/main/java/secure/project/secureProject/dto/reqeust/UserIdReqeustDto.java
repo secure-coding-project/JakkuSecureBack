@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BasketRequestDto {
+public class UserIdReqeustDto {
     private Long userId;
 }
