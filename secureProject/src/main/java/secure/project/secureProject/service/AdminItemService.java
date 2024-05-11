@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import secure.project.secureProject.domain.Basket;
 import secure.project.secureProject.domain.Item;
 import secure.project.secureProject.domain.Order;
 import secure.project.secureProject.domain.OrderItem;
@@ -23,6 +24,7 @@ import secure.project.secureProject.enums.OrderState;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.repository.AdminItemRepository;
+import secure.project.secureProject.repository.BasketRepository;
 import secure.project.secureProject.repository.OrderItemRepository;
 import secure.project.secureProject.repository.OrderRepository;
 import secure.project.secureProject.util.S3UploadUtil;
@@ -42,6 +44,7 @@ public class AdminItemService {
     private final S3UploadUtil s3UploadUtil;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final BasketRepository basketRepository;
 
     public Map<String, Object> selectAdminItem(Integer page, Integer size, String latest, String price, String searchName){
 
@@ -104,6 +107,20 @@ public class AdminItemService {
                      .build();
              adminItemRepository.save(newItem);
          }
+
+        return true;
+    }
+
+    public Boolean deleteItem(Long itemId) {
+        Item item = adminItemRepository.findById(itemId)
+                .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
+
+        List<Basket> baskets= basketRepository.findByItemId(item);
+
+        if(!baskets.isEmpty()){
+            basketRepository.deleteAll(baskets);
+        }
+        adminItemRepository.delete(item);
 
         return true;
     }

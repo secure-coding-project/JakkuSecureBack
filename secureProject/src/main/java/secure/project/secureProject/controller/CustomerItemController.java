@@ -45,6 +45,14 @@ public class CustomerItemController {
         return new ResponseDto<>(customerItemService.selectBasketItem(basketRequestDto));
     }
 
+    @DeleteMapping("/basket/delete/{itemId}")
+    public ResponseDto<Boolean> basketItemDelete(
+            @PathVariable Long itemId,
+            @Valid @RequestBody UserIdReqeustDto userIdReqeustDto
+    ) {
+        return new ResponseDto<>(customerItemService.basketItemDelete(itemId,userIdReqeustDto));
+    }
+
     @PatchMapping("/payment/{userId}")
     public ResponseDto<Boolean> paymentItem(
             @PathVariable Long userId,

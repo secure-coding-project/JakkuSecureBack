@@ -117,6 +117,21 @@ public class CustomerItemService {
         return result;
     }
 
+    public Boolean basketItemDelete(Long itemId, UserIdReqeustDto userIdReqeustDto) {
+        Item item = customerItemRepository.findById(itemId)
+                .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
+
+        User user = userRepository.findById(userIdReqeustDto.getUserId())
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
+
+        Basket basket = basketRepository.findByItemIdAndUserId(item, user)
+                .orElseThrow(() -> new ApiException(ErrorDefine.BAKSET_NOT_FOUND));
+
+        basketRepository.delete(basket);
+
+        return true;
+    }
+
     public Boolean paymentItem(Long userId, List<CustomerOrderItemRequestDto> customerOrderItemRequestDto) {
         int totalPrice = 0;
         int totalAmount = 0;

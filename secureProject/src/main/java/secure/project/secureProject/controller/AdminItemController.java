@@ -40,6 +40,13 @@ public class AdminItemController {
         return new ResponseDto<>(adminItemService.addItemAmount(itemRequestDto));
     }
 
+    @DeleteMapping("/deleteItem/{itemId}")
+    public ResponseDto<Boolean> deleteItem(
+            @PathVariable Long itemId
+    ) {
+        return new ResponseDto<>(adminItemService.deleteItem(itemId));
+    }
+
     @PostMapping(value = "/addItem" ,consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseDto<Boolean> addItem(
             @Valid @RequestPart(value = "request") ItemReqeustDto itemReqeustDto,
