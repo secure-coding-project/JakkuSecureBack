@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "USER_TB")
 @Entity
@@ -36,7 +37,10 @@ public class User {
     @Column(nullable = false)
     private LocalDate updateAt;
 
+    //---------------------------------------------------------
 
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    private List<Basket> basketList;
 
     //----------------------------------------------------
 
@@ -49,4 +53,9 @@ public class User {
         this.createAt = LocalDate.now();
         this.updateAt = updateAt;
     }
+
+
+    //-----------------------------------------------------------
+
+    public void updatePoint(Long point){this.point = point;}
 }
