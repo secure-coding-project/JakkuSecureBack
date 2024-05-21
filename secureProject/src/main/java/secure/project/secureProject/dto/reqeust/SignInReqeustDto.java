@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignInReqeustDto {
-    private String username;
+    private String loginId;
     private String password;
 }
 
