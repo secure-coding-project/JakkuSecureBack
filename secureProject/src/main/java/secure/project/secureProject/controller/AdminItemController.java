@@ -5,14 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import secure.project.secureProject.dto.reqeust.AdminRegisterRequestDto;
-import secure.project.secureProject.dto.reqeust.ItemAddAmountRequestDto;
-import secure.project.secureProject.dto.reqeust.ItemReqeustDto;
+import secure.project.secureProject.dto.request.AdminRegisterRequestDto;
+import secure.project.secureProject.dto.request.ItemAddAmountRequestDto;
+import secure.project.secureProject.dto.request.ItemRequestDto;
 import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.service.AdminItemService;
-import secure.project.secureProject.util.S3UploadUtil;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,7 +47,7 @@ public class AdminItemController {
 
     @PostMapping(value = "/addItem" ,consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseDto<Boolean> addItem(
-            @Valid @RequestPart(value = "request") ItemReqeustDto itemReqeustDto,
+            @Valid @RequestPart(value = "request") ItemRequestDto itemReqeustDto,
             @RequestPart(value = "image") MultipartFile multipartFile
             ) {
         return new ResponseDto<>(adminItemService.addItem(itemReqeustDto,multipartFile));

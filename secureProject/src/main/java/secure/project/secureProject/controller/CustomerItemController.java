@@ -3,10 +3,9 @@ package secure.project.secureProject.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import secure.project.secureProject.domain.User;
-import secure.project.secureProject.dto.reqeust.BasketAddItemRequestDto;
-import secure.project.secureProject.dto.reqeust.UserIdReqeustDto;
-import secure.project.secureProject.dto.reqeust.CustomerOrderItemRequestDto;
+import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
+import secure.project.secureProject.dto.request.UserIdRequestDto;
+import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.service.CustomerItemService;
 
@@ -35,11 +34,10 @@ public class CustomerItemController {
     public ResponseDto<Boolean> addItemToBasket(
             @Valid @RequestBody BasketAddItemRequestDto basketAddItem
             ) {
-        System.err.println("여기는 들어오니?");
         return new ResponseDto<>(customerItemService.addItemToBasket(basketAddItem));
     }
 
-    @GetMapping("/basket/{itemId}")
+    @GetMapping("/basket/{userId}")
     public ResponseDto<Map<String, Object>> selectBasketItem(
            @PathVariable Long userId
             ) {
@@ -49,7 +47,7 @@ public class CustomerItemController {
     @DeleteMapping("/basket/delete/{itemId}")
     public ResponseDto<Boolean> basketItemDelete(
             @PathVariable Long itemId,
-            @Valid @RequestBody UserIdReqeustDto userIdReqeustDto
+            @Valid @RequestBody UserIdRequestDto userIdReqeustDto
     ) {
         return new ResponseDto<>(customerItemService.basketItemDelete(itemId,userIdReqeustDto));
     }
@@ -57,7 +55,7 @@ public class CustomerItemController {
     @PatchMapping("/payment/{userId}")
     public ResponseDto<Boolean> paymentItem(
             @PathVariable Long userId,
-            @Valid @RequestBody List<CustomerOrderItemRequestDto> customerOrderItemRequestDto
+            @RequestBody List<CustomerOrderItemRequestDto> customerOrderItemRequestDto
             ) {
         return new ResponseDto<>(customerItemService.paymentItem(userId, customerOrderItemRequestDto));
     }
@@ -83,7 +81,7 @@ public class CustomerItemController {
     @PatchMapping("/refund/{orderId}")
     public ResponseDto<Boolean> refundOrder(
             @PathVariable Long orderId,
-            @RequestBody UserIdReqeustDto userIdReqeustDto
+            @RequestBody UserIdRequestDto userIdReqeustDto
     ) {
         return new ResponseDto<>(customerItemService.refundOrder(userIdReqeustDto, orderId));
     }
