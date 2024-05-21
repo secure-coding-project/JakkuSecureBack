@@ -37,6 +37,13 @@ public class CustomerItemController {
         return new ResponseDto<>(customerItemService.addItemToBasket(basketAddItem));
     }
 
+    @GetMapping("/basket/point/{userId}")
+    public ResponseDto<Long> selectUserPoint(
+            @PathVariable Long userId
+    ) {
+        return new ResponseDto<>(customerItemService.selectUserPoint(userId));
+    }
+
     @GetMapping("/basket/{userId}")
     public ResponseDto<Map<String, Object>> selectBasketItem(
            @PathVariable Long userId

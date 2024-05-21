@@ -92,6 +92,13 @@ public class CustomerItemService {
         return true;
     }
 
+    public Long selectUserPoint(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
+
+        return user.getPoint();
+    }
+
     public Map<String, Object> selectBasketItem(Long userId) {
         User finduser = userRepository.findById(userId)
                 .orElseThrow(()-> new ApiException(ErrorDefine.USER_NOT_FOUND));
