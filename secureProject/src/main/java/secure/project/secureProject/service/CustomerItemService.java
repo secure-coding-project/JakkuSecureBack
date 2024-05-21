@@ -91,8 +91,8 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectBasketItem(UserIdReqeustDto basketRequestDto) {
-        User finduser = userRepository.findById(basketRequestDto.getUserId())
+    public Map<String, Object> selectBasketItem(Long userId) {
+        User finduser = userRepository.findById(userId)
                 .orElseThrow(()-> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         List<Basket> selectBasket = basketRepository.findBasketsByUserIdWithItem(finduser);
@@ -175,8 +175,8 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status, UserIdReqeustDto userIdReqeustDto) {
-        User user1 = userRepository.findById(userIdReqeustDto.getUserId())
+    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status, Long userId) {
+        User user1 = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         Sort sort = Sort.by(

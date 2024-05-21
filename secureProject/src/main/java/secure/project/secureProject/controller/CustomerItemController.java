@@ -35,14 +35,15 @@ public class CustomerItemController {
     public ResponseDto<Boolean> addItemToBasket(
             @Valid @RequestBody BasketAddItemRequestDto basketAddItem
             ) {
+        System.err.println("여기는 들어오니?");
         return new ResponseDto<>(customerItemService.addItemToBasket(basketAddItem));
     }
 
-    @GetMapping("/basket")
+    @GetMapping("/basket/{itemId}")
     public ResponseDto<Map<String, Object>> selectBasketItem(
-           @Valid @RequestBody UserIdReqeustDto basketRequestDto
+           @PathVariable Long userId
             ) {
-        return new ResponseDto<>(customerItemService.selectBasketItem(basketRequestDto));
+        return new ResponseDto<>(customerItemService.selectBasketItem(userId));
     }
 
     @DeleteMapping("/basket/delete/{itemId}")
@@ -61,15 +62,15 @@ public class CustomerItemController {
         return new ResponseDto<>(customerItemService.paymentItem(userId, customerOrderItemRequestDto));
     }
 
-    @GetMapping("/history")
+    @GetMapping("/history/{userId}")
     public ResponseDto<Map<String, Object>> selectHistoryItem(
             @RequestParam(name = "latest", defaultValue = "desc") String latest,
             @RequestParam(name = "status", defaultValue = "desc") String status,
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "3") Integer size,
-            @RequestBody UserIdReqeustDto userIdReqeustDto
+            @PathVariable Long userId
             ) {
-        return new ResponseDto<>(customerItemService.selectHistroyItem(page, size, latest, status, userIdReqeustDto));
+        return new ResponseDto<>(customerItemService.selectHistroyItem(page, size, latest, status, userId));
     }
 
     @GetMapping("/history/detail/{orderId}")
