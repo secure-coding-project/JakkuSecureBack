@@ -8,16 +8,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import secure.project.secureProject.domain.User;
+import secure.project.secureProject.dto.request.LoginSignUpRequestDto;
 import secure.project.secureProject.dto.request.SignInRequestDto;
+import secure.project.secureProject.enums.UserRole;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.repository.UserRepository;
 import secure.project.secureProject.security.jwt.JwtToken;
 import secure.project.secureProject.security.jwt.JwtTokenProvider;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Slf4j
 public class LoginService {
     private final UserRepository userRepository;
@@ -45,7 +49,23 @@ public class LoginService {
         return jwtToken;
     }
 
+    public Boolean signUp(LoginSignUpRequestDto loginSignUpRequestDto) {
+        if(userRepository.findByNickname(loginSignUpRequestDto.getUserNickname()).isPresent())
+            throw new ApiException(ErrorDefine.USER_EXIST);
+        if(userRepository.findByLoginId(loginSignUpRequestDto.getLoginId()).isPresent())
+            throw new ApiException(ErrorDefine.USERID_EXIST);
 
+        User user = User.builder()
+                .loginId(loginSignUpRequestDto.getLoginId())
+                .password(loginSignUpRequestDto.getPassword())
+                .point(0L)
+                .nickname(loginSignUpRequestDto.getUserNickname())
+                .userRole(UserRole.USER)
+                .updateAt(LocalDate.now())
+                .build();
+        userRepository.save(user);
+        return true;
+    }
 
 }
 

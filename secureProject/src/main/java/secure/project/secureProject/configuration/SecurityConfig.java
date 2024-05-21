@@ -31,6 +31,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login/sign-in").permitAll()
+                        .requestMatchers("/login/sign-up").permitAll()
                         .requestMatchers("/admin/*").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
