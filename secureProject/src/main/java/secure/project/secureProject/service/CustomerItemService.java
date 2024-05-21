@@ -92,8 +92,16 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectBasketItem(Long userId) {
-        User finduser = userRepository.findById(userId)
+    public Long selectUserPoint() {
+
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
+
+        return user.getPoint();
+    }
+
+    public Map<String, Object> selectBasketItem() {
+        User finduser = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(()-> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         List<Basket> selectBasket = basketRepository.findBasketsByUserIdWithItem(finduser);
@@ -133,7 +141,7 @@ public class CustomerItemService {
         return true;
     }
 
-    public Boolean paymentItem(Long userId, List<CustomerOrderItemRequestDto> customerOrderItemRequestDto) {
+    public Boolean paymentItem(List<CustomerOrderItemRequestDto> customerOrderItemRequestDto) {
         int totalPrice = 0;
         int totalAmount = 0;
 
@@ -145,7 +153,7 @@ public class CustomerItemService {
             totalAmount += customerOrderItemRequestDto1.getBuyItemAmount();
         }
 
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
         user.updatePoint(user.getPoint() - totalPrice);
 
@@ -176,8 +184,8 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status, Long userId) {
-        User user1 = userRepository.findById(userId)
+    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status) {
+        User user1 = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         Sort sort = Sort.by(

@@ -11,10 +11,11 @@ import secure.project.secureProject.util.SecurityUtil;
 @RequestMapping("/topbar")
 @RequiredArgsConstructor
 public class TopbarController {
+    private final SecurityUtil securityUtil;
 
     @GetMapping("/username")
     public ResponseDto<String> topbarNickname() {
-        return new ResponseDto<>(SecurityUtil.getCurrentUsername());
+        return new ResponseDto<>(securityUtil.getCurrentUsername());
     }
 
 }
