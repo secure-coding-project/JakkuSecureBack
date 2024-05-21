@@ -37,18 +37,16 @@ public class CustomerItemController {
         return new ResponseDto<>(customerItemService.addItemToBasket(basketAddItem));
     }
 
-    @GetMapping("/basket/point/{userId}")
+    @GetMapping("/basket/point")
     public ResponseDto<Long> selectUserPoint(
-            @PathVariable Long userId
     ) {
-        return new ResponseDto<>(customerItemService.selectUserPoint(userId));
+        return new ResponseDto<>(customerItemService.selectUserPoint());
     }
 
-    @GetMapping("/basket/{userId}")
+    @GetMapping("/basket")
     public ResponseDto<Map<String, Object>> selectBasketItem(
-           @PathVariable Long userId
             ) {
-        return new ResponseDto<>(customerItemService.selectBasketItem(userId));
+        return new ResponseDto<>(customerItemService.selectBasketItem());
     }
 
     @DeleteMapping("/basket/delete/{itemId}")
@@ -59,23 +57,21 @@ public class CustomerItemController {
         return new ResponseDto<>(customerItemService.basketItemDelete(itemId,userIdReqeustDto));
     }
 
-    @PatchMapping("/payment/{userId}")
+    @PatchMapping("/payment")
     public ResponseDto<Boolean> paymentItem(
-            @PathVariable Long userId,
             @RequestBody List<CustomerOrderItemRequestDto> customerOrderItemRequestDto
             ) {
-        return new ResponseDto<>(customerItemService.paymentItem(userId, customerOrderItemRequestDto));
+        return new ResponseDto<>(customerItemService.paymentItem(customerOrderItemRequestDto));
     }
 
-    @GetMapping("/history/{userId}")
+    @GetMapping("/history")
     public ResponseDto<Map<String, Object>> selectHistoryItem(
             @RequestParam(name = "latest", defaultValue = "desc") String latest,
             @RequestParam(name = "status", defaultValue = "desc") String status,
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "3") Integer size,
-            @PathVariable Long userId
+            @RequestParam(name = "size", defaultValue = "3") Integer size
             ) {
-        return new ResponseDto<>(customerItemService.selectHistroyItem(page, size, latest, status, userId));
+        return new ResponseDto<>(customerItemService.selectHistroyItem(page, size, latest, status));
     }
 
     @GetMapping("/history/detail/{orderId}")
