@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import secure.project.secureProject.enums.UserRole;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +33,10 @@ public class User {
     private String nickname;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
+    @Column(nullable = false)
     private LocalDate createAt;
 
     @Column(nullable = false)
@@ -45,11 +50,12 @@ public class User {
     //----------------------------------------------------
 
     @Builder
-    public User(String loginId, String password, String nickname, LocalDate updateAt, Long point) {
+    public User(String loginId, String password, String nickname, LocalDate updateAt, UserRole userRole,Long point) {
         this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
         this.point = point;
+        this.userRole = userRole;
         this.createAt = LocalDate.now();
         this.updateAt = updateAt;
     }

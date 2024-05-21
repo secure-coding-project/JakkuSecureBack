@@ -1,7 +1,6 @@
 package secure.project.secureProject.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,14 +8,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import secure.project.secureProject.domain.*;
-import secure.project.secureProject.dto.reqeust.BasketAddItemRequestDto;
-import secure.project.secureProject.dto.reqeust.UserIdReqeustDto;
-import secure.project.secureProject.dto.reqeust.CustomerOrderItemRequestDto;
+import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
+import secure.project.secureProject.dto.request.UserIdRequestDto;
+import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.*;
 import secure.project.secureProject.enums.OrderState;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.repository.*;
+import secure.project.secureProject.util.SecurityUtil;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -34,6 +34,7 @@ public class CustomerItemService {
     private final BasketRepository basketRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final SecurityUtil securityUtil;
 
     public Map<String, Object> selectCustomerItem(Integer page, Integer size, String latest, String price,String searchName){
         Sort sort = Sort.by(
@@ -91,8 +92,16 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectBasketItem(UserIdReqeustDto basketRequestDto) {
-        User finduser = userRepository.findById(basketRequestDto.getUserId())
+    public Long selectUserPoint() {
+
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
+
+        return user.getPoint();
+    }
+
+    public Map<String, Object> selectBasketItem() {
+        User finduser = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(()-> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         List<Basket> selectBasket = basketRepository.findBasketsByUserIdWithItem(finduser);
@@ -117,7 +126,7 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean basketItemDelete(Long itemId, UserIdReqeustDto userIdReqeustDto) {
+    public Boolean basketItemDelete(Long itemId, UserIdRequestDto userIdReqeustDto) {
         Item item = customerItemRepository.findById(itemId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
 
@@ -132,7 +141,7 @@ public class CustomerItemService {
         return true;
     }
 
-    public Boolean paymentItem(Long userId, List<CustomerOrderItemRequestDto> customerOrderItemRequestDto) {
+    public Boolean paymentItem(List<CustomerOrderItemRequestDto> customerOrderItemRequestDto) {
         int totalPrice = 0;
         int totalAmount = 0;
 
@@ -144,7 +153,7 @@ public class CustomerItemService {
             totalAmount += customerOrderItemRequestDto1.getBuyItemAmount();
         }
 
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
         user.updatePoint(user.getPoint() - totalPrice);
 
@@ -175,8 +184,8 @@ public class CustomerItemService {
         return true;
     }
 
-    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status, UserIdReqeustDto userIdReqeustDto) {
-        User user1 = userRepository.findById(userIdReqeustDto.getUserId())
+    public Map<String, Object> selectHistroyItem(Integer page, Integer size, String latest, String status) {
+        User user1 = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         Sort sort = Sort.by(
@@ -236,7 +245,7 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean refundOrder(UserIdReqeustDto userIdReqeustDto, Long orderId) {
+    public Boolean refundOrder(UserIdRequestDto userIdReqeustDto, Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ORDER_NOT_FOUND));
         User user = userRepository.findById(userIdReqeustDto.getUserId())

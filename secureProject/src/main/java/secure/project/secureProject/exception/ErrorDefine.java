@@ -28,8 +28,9 @@ public enum ErrorDefine {
     ORDER_NOT_FOUND("4043", HttpStatus.NOT_FOUND, "Not Found: Order Not Found"),
     BAKSET_NOT_FOUND("4044", HttpStatus.NOT_FOUND, "Not Found: Basket Not Found"),
     // CONFLICT: 409
-    EMAIL_EXIST("4090", HttpStatus.CONFLICT, "Conflict: An account with this email already exists."),
-    ITEM_EXIST("4091", HttpStatus.CONFLICT, "Conflict: An item with this item already exists"),
+    USER_EXIST("4090", HttpStatus.CONFLICT, "Conflict: An account with this userNickname already exists."),
+    USERID_EXIST("4091", HttpStatus.CONFLICT, "Conflict: An account with this userId already exists."),
+    ITEM_EXIST("4092", HttpStatus.CONFLICT, "Conflict: An item with this item already exists"),
     // GONE: 410
     USER_DELETE("4010", HttpStatus.GONE, "GONE: User delete data"),
     USER_EXPEL("4011", HttpStatus.GONE, "GONE: USER expelled"),
