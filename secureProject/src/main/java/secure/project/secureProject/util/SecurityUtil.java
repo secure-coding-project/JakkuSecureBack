@@ -1,10 +1,14 @@
 package secure.project.secureProject.util;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 
+@Component
+@RequiredArgsConstructor
 public class SecurityUtil {
     public static String getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

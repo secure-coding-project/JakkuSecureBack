@@ -1,7 +1,6 @@
 package secure.project.secureProject.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,14 +12,13 @@ import secure.project.secureProject.domain.Basket;
 import secure.project.secureProject.domain.Item;
 import secure.project.secureProject.domain.Order;
 import secure.project.secureProject.domain.OrderItem;
-import secure.project.secureProject.dto.reqeust.AdminRegisterRequestDto;
-import secure.project.secureProject.dto.reqeust.ItemAddAmountRequestDto;
-import secure.project.secureProject.dto.reqeust.ItemReqeustDto;
+import secure.project.secureProject.dto.request.AdminRegisterRequestDto;
+import secure.project.secureProject.dto.request.ItemAddAmountRequestDto;
+import secure.project.secureProject.dto.request.ItemRequestDto;
 import secure.project.secureProject.dto.response.HistoryDetailDto;
 import secure.project.secureProject.dto.response.ItemDto;
 import secure.project.secureProject.dto.response.OrderAdminDto;
 import secure.project.secureProject.dto.response.PageInfo;
-import secure.project.secureProject.enums.OrderState;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.repository.AdminItemRepository;
@@ -93,7 +91,7 @@ public class AdminItemService {
         String imageUrl = s3UploadUtil.upload(multipartFile);
         return imageUrl;
     }
-    public boolean addItem(ItemReqeustDto itemReqeustDto, MultipartFile multipartFile) {
+    public boolean addItem(ItemRequestDto itemReqeustDto, MultipartFile multipartFile) {
          if(adminItemRepository.existsByItemName(itemReqeustDto.getItemName())){
              throw new ApiException(ErrorDefine.ITEM_EXIST);
          }else {

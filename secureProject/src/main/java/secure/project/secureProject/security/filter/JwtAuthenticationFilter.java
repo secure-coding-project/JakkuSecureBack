@@ -26,12 +26,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         System.err.println("여기서 jwt 추출" + token);
         // 2. validateToken으로 토큰 유효성 검사
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            System.err.println("여기는 들어오니?");
             // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext에 저장
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
-            System.err.println("여기는 들어나나나나나나난");
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.err.println("여기는 잘 통과하니?");
+
         }
         chain.doFilter(request, response);
     }
@@ -40,10 +38,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            System.err.println("bear에서 분리가 잘되니?" + bearerToken.substring(7));
             return bearerToken.substring(7);
         }
-        System.err.println("zzz");
         return null;
     }
 }

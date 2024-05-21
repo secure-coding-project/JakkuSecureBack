@@ -1,4 +1,4 @@
-package secure.project.secureProject.dto.reqeust;
+package secure.project.secureProject.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

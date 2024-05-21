@@ -1,7 +1,6 @@
 package secure.project.secureProject.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,14 +8,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import secure.project.secureProject.domain.*;
-import secure.project.secureProject.dto.reqeust.BasketAddItemRequestDto;
-import secure.project.secureProject.dto.reqeust.UserIdReqeustDto;
-import secure.project.secureProject.dto.reqeust.CustomerOrderItemRequestDto;
+import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
+import secure.project.secureProject.dto.request.UserIdRequestDto;
+import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.*;
 import secure.project.secureProject.enums.OrderState;
 import secure.project.secureProject.exception.ApiException;
 import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.repository.*;
+import secure.project.secureProject.util.SecurityUtil;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -34,6 +34,7 @@ public class CustomerItemService {
     private final BasketRepository basketRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final SecurityUtil securityUtil;
 
     public Map<String, Object> selectCustomerItem(Integer page, Integer size, String latest, String price,String searchName){
         Sort sort = Sort.by(
@@ -117,7 +118,7 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean basketItemDelete(Long itemId, UserIdReqeustDto userIdReqeustDto) {
+    public Boolean basketItemDelete(Long itemId, UserIdRequestDto userIdReqeustDto) {
         Item item = customerItemRepository.findById(itemId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
 
@@ -236,7 +237,7 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean refundOrder(UserIdReqeustDto userIdReqeustDto, Long orderId) {
+    public Boolean refundOrder(UserIdRequestDto userIdReqeustDto, Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ORDER_NOT_FOUND));
         User user = userRepository.findById(userIdReqeustDto.getUserId())
