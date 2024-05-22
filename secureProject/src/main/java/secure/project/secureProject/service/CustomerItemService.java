@@ -151,6 +151,9 @@ public class CustomerItemService {
 
             totalPrice += item.getItemPrice() * customerOrderItemRequestDto1.getBuyItemAmount();
             totalAmount += customerOrderItemRequestDto1.getBuyItemAmount();
+            if(item.getItemAmount() < totalAmount)
+                throw new ApiException(ErrorDefine.OVER_ITEM_AMOUNT);
+            item.updateItemAmount(item.getItemAmount()-totalAmount);
         }
 
         User user = userRepository.findByNickname(securityUtil.getCurrentUsername())

@@ -83,7 +83,7 @@ public class AdminItemService {
         Item item = adminItemRepository.findById(itemRequestDto.getItemId())
                 .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
 
-        item.updateAdminItemAmount(item.getItemAmount() + itemRequestDto.getItemAmount());
+        item.updateItemAmount(item.getItemAmount() + itemRequestDto.getItemAmount());
 
         return true;
     }

@@ -11,7 +11,7 @@ public enum ErrorDefine {
     // Bad Request
     INVALID_ARGUMENT("4000", HttpStatus.BAD_REQUEST, "Bad Request: Invalid Arguments"),
     NOT_END_POINT("4001",HttpStatus.BAD_REQUEST , "Bad Request: Not Exist End Point Error"),
-
+    OVER_ITEM_AMOUNT("4002", HttpStatus.BAD_REQUEST, "Bad Request: Over Item Amount"),
     // UNAUTHORIZED: 401
     ACCESS_DENIED("4010", HttpStatus.UNAUTHORIZED, "Unauthorized: Access denied"),
     TOKEN_INVALID("4011", HttpStatus.UNAUTHORIZED, "Unauthorized: Invalid Token"),

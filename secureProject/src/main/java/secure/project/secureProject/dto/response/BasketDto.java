@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class BasketDto {
-    private Long basketId; //
+    private Long basketId;
 
     private Long itemId;
 

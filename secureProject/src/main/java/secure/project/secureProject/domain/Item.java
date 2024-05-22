@@ -52,7 +52,7 @@ public class Item {
 
     //-----------------------------------------------------------
 
-    public void updateAdminItemAmount(Integer itemAmount) {
+    public void updateItemAmount(Integer itemAmount) {
         this.itemAmount = itemAmount;
     }
 
