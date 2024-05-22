@@ -259,7 +259,6 @@ public class CustomerItemService {
         if(deleteOrderItem.isEmpty())
             throw new ApiException(ErrorDefine.ORDER_NOT_FOUND);
 
-        orderItemRepository.deleteAll(deleteOrderItem);
         user.updatePoint(user.getPoint() + order.getOrderItemTotalPrice());
         order.updateOrderState(OrderState.REFUND);
 
