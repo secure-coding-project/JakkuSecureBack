@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import secure.project.secureProject.domain.*;
 import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
-import secure.project.secureProject.dto.request.UserIdRequestDto;
 import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.*;
 import secure.project.secureProject.enums.OrderState;
@@ -71,7 +70,7 @@ public class CustomerItemService {
     }
 
     public Boolean addItemToBasket(BasketAddItemRequestDto basketAddItemRequestDto) {
-        User user = userRepository.findById(basketAddItemRequestDto.getUserId())
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow( () -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         Item item = customerItemRepository.findById(basketAddItemRequestDto.getItemId())
@@ -126,11 +125,11 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean basketItemDelete(Long itemId, UserIdRequestDto userIdReqeustDto) {
+    public Boolean basketItemDelete(Long itemId) {
         Item item = customerItemRepository.findById(itemId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
 
-        User user = userRepository.findById(userIdReqeustDto.getUserId())
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         Basket basket = basketRepository.findByItemIdAndUserId(item, user)
@@ -245,10 +244,10 @@ public class CustomerItemService {
         return result;
     }
 
-    public Boolean refundOrder(UserIdRequestDto userIdReqeustDto, Long orderId) {
+    public Boolean refundOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.ORDER_NOT_FOUND));
-        User user = userRepository.findById(userIdReqeustDto.getUserId())
+        User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         List<OrderItem> deleteOrderItem = orderItemRepository.findByOrder(order);

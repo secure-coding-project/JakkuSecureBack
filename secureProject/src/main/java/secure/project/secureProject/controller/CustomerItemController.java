@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
-import secure.project.secureProject.dto.request.UserIdRequestDto;
 import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.service.CustomerItemService;
@@ -51,10 +50,9 @@ public class CustomerItemController {
 
     @DeleteMapping("/basket/delete/{itemId}")
     public ResponseDto<Boolean> basketItemDelete(
-            @PathVariable Long itemId,
-            @Valid @RequestBody UserIdRequestDto userIdReqeustDto
+            @PathVariable Long itemId
     ) {
-        return new ResponseDto<>(customerItemService.basketItemDelete(itemId,userIdReqeustDto));
+        return new ResponseDto<>(customerItemService.basketItemDelete(itemId));
     }
 
     @PatchMapping("/payment")
@@ -83,9 +81,8 @@ public class CustomerItemController {
 
     @PatchMapping("/refund/{orderId}")
     public ResponseDto<Boolean> refundOrder(
-            @PathVariable Long orderId,
-            @RequestBody UserIdRequestDto userIdReqeustDto
+            @PathVariable Long orderId
     ) {
-        return new ResponseDto<>(customerItemService.refundOrder(userIdReqeustDto, orderId));
+        return new ResponseDto<>(customerItemService.refundOrder(orderId));
     }
 }
