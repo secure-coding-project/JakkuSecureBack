@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketAddItemRequestDto {
-    private Long userId;
     private Long itemId;
     private Integer itemAmount;
 }
