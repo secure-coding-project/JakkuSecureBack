@@ -14,7 +14,7 @@ public class BasketDto {
 
     private Integer itemPrice;
 
-    private Integer basketItemAmount; //
+    private Integer basketItemAmount;
 
     private Integer itemAmount;
 
