@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class BasketDto {
-    private Long basketId; //
+    private Long basketId;
 
     private Long itemId;
 
@@ -14,7 +14,7 @@ public class BasketDto {
 
     private Integer itemPrice;
 
-    private Integer basketItemAmount; //
+    private Integer basketItemAmount;
 
     private Integer itemAmount;
 

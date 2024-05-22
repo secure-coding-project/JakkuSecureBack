@@ -25,7 +25,6 @@ public class CustomerItemController {
             @RequestParam(name = "price", defaultValue = "desc") String price,
             @RequestParam(name = "searchName", required = false) String searchName
     ){
-
         return new ResponseDto<>(customerItemService.selectCustomerItem(page, size, latest, price, searchName));
     }
 
@@ -64,10 +63,11 @@ public class CustomerItemController {
 
     @GetMapping("/history")
     public ResponseDto<Map<String, Object>> selectHistoryItem(
-            @RequestParam(name = "latest", defaultValue = "desc") String latest,
-            @RequestParam(name = "status", defaultValue = "desc") String status,
+
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "3") Integer size
+            @RequestParam(name = "size", defaultValue = "3") Integer size,
+            @RequestParam(name = "latest", defaultValue = "desc") String latest,
+            @RequestParam(name = "status", defaultValue = "desc") String status
             ) {
         return new ResponseDto<>(customerItemService.selectHistroyItem(page, size, latest, status));
     }

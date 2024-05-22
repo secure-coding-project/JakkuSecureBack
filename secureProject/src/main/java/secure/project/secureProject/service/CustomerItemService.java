@@ -77,6 +77,7 @@ public class CustomerItemService {
                 .orElseThrow(() -> new ApiException(ErrorDefine.ITEM_NOT_FOUND));
 
         if(basketRepository.existsByItemIdAndUserId(item, user)){
+            System.err.println("sadfasdfasdf");
             Basket basket = basketRepository.findByItemIdAndUserId(item, user)
                             .orElseThrow(()->new ApiException(ErrorDefine.BASKET_IS_EMPTY));
             basket.updateAdminItemAmount(basketAddItemRequestDto.getItemAmount());
@@ -150,6 +151,9 @@ public class CustomerItemService {
 
             totalPrice += item.getItemPrice() * customerOrderItemRequestDto1.getBuyItemAmount();
             totalAmount += customerOrderItemRequestDto1.getBuyItemAmount();
+            if(item.getItemAmount() < totalAmount)
+                throw new ApiException(ErrorDefine.OVER_ITEM_AMOUNT);
+            item.updateItemAmount(item.getItemAmount()-totalAmount);
         }
 
         User user = userRepository.findByNickname(securityUtil.getCurrentUsername())
@@ -193,7 +197,7 @@ public class CustomerItemService {
         );
 
         Pageable pageable = PageRequest.of(page,size,sort);
-        Page<Order> selectOrder = orderRepository.searchOrderListByUserId(pageable,user1);
+        Page<Order> selectOrder = orderRepository.searchOrderListByUserId(user1,pageable);
 
         PageInfo pageInfo = PageInfo.builder()
                 .currentPage(selectOrder.getNumber() + 1)

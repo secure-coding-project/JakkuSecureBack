@@ -35,7 +35,6 @@ public class S3UploadUtil {
 
     // S3 파일 업로드
     public String upload(MultipartFile multipartFile) {
-        System.err.println(multipartFile);
         // MultipartFile -> File
         File convertFile;
         try {
@@ -47,8 +46,6 @@ public class S3UploadUtil {
 
         // S3에 저장할 파일명
         String fileName = "secure-project-using-image/" + UUID.randomUUID() + "_" + convertFile.getName();
-        System.err.println(fileName);
-        System.err.println(bucket);
 
         // S3에 파일 업로드
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, convertFile).withCannedAcl(CannedAccessControlList.PublicRead));
