@@ -2,14 +2,18 @@ package secure.project.secureProject.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import secure.project.secureProject.dto.request.BasketAddItemRequestDto;
 import secure.project.secureProject.dto.request.CustomerOrderItemRequestDto;
 import secure.project.secureProject.dto.response.ResponseDto;
+import secure.project.secureProject.exception.ApiException;
+import secure.project.secureProject.exception.ErrorDefine;
 import secure.project.secureProject.service.CustomerItemService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/customers")
