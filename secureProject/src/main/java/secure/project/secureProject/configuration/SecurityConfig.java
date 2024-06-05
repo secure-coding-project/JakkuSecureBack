@@ -13,6 +13,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import secure.project.secureProject.security.filter.JwtAuthenticationFilter;
 import secure.project.secureProject.security.jwt.JwtTokenProvider;
 
@@ -34,6 +35,13 @@ public class SecurityConfig {
                         .requestMatchers("/login/sign-up").permitAll()
                         .requestMatchers("/admin/*").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
+                .headers(headers -> headers.xssProtection(
+                        xss ->
+                                xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
+                        ).contentSecurityPolicy(
+                                cps -> cps.policyDirectives("script-src 'self'")
+                        )
+                )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
         return http.build();
