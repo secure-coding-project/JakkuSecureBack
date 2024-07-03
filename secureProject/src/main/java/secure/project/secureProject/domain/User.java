@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import secure.project.secureProject.domain.enums.LoginProvider;
 import secure.project.secureProject.domain.enums.UserRole;
 
 import java.time.LocalDate;
@@ -43,6 +44,15 @@ public class User {
     private LocalDate updateAt;
 
     @Column
+    private String socialName;
+
+    @Column
+    private String socialId;
+
+    @Column
+    private LoginProvider loginProvider;
+
+    @Column
     private Boolean isLogin;
 
     @Column
@@ -64,6 +74,22 @@ public class User {
         this.userRole = userRole;
         this.createAt = LocalDate.now();
         this.updateAt = updateAt;
+    }
+
+    public User(String socialName, String socialId, LoginProvider loginProvider) {
+        this.socialName = socialName;
+        this.socialId = socialId;
+        this.loginProvider = loginProvider;
+    }
+
+    public void setLogin(String refreshToken) {
+        this.refreshToken = refreshToken;
+        this.isLogin = true;
+    }
+
+    public void setLogout() {
+        this.refreshToken = null;
+        this.isLogin = false;
     }
 
 

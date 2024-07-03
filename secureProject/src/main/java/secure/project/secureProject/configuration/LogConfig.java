@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @Aspect
 public class LogConfig {
 
-    @Around("within(secure.project.secureProject..*))") // ex. within(me.shinsunyoung.demo..*)) 1
+    @Around("within(secure.project.secureProject..*) && !within(secure.project.secureProject.configuration..*) && !within(secure.project.secureProject.security.filter..*))")
     public Object logging(ProceedingJoinPoint pjp) throws Throwable { // 2
 
         String params = getRequestParams(); // request 값 가져오기
@@ -30,7 +29,7 @@ public class LogConfig {
         log.info("-----------> REQUEST : {}({}) = {}", pjp.getSignature().getDeclaringTypeName(),
                 pjp.getSignature().getName(), params);
 
-        Object result = pjp.proceed(); // 4
+        Object result = pjp.proceed();
 
         long endAt = System.currentTimeMillis();
 

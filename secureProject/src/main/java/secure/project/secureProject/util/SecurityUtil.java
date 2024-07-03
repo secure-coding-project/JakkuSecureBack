@@ -12,6 +12,7 @@ import secure.project.secureProject.exception.ErrorDefine;
 public class SecurityUtil {
     public String getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication == null || authentication.getName() == null) {
             throw new ApiException(ErrorDefine.ACCESS_DENIED);
         }

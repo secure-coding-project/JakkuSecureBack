@@ -1,4 +1,4 @@
-package secure.project.secureProject.service;
+    package secure.project.secureProject.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +38,6 @@ public class CustomerItemService {
     private final SecurityUtil securityUtil;
 
     public Map<String, Object> selectCustomerItem(Integer page, Integer size, String latest, String price,String searchName){
-        System.err.println(searchName);
 
         if(searchName != null && InputValidator.lengthNotInRange(searchName, 0, 30)) {
             throw new ApiException(ErrorDefine.INVALID_ARGUMENT);
@@ -47,7 +46,6 @@ public class CustomerItemService {
             throw new ApiException(ErrorDefine.INVALID_ARGUMENT);
         }
 
-        System.err.println("nono");
 
         Sort sort = Sort.by(
                 new Sort.Order(Sort.Direction.fromString(latest), "updateAt"),

@@ -26,6 +26,10 @@ repositories {
 }
 
 dependencies {
+	implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.3.0'
+	implementation 'com.github.vladimir-bukhtoyarov:bucket4j-jcache:7.3.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-gateway:3.1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation "com.google.guava:guava:31.1-jre"
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'

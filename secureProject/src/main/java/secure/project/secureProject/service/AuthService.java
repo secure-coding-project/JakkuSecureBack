@@ -57,7 +57,7 @@ public class AuthService {
 
         User loginCustomer = customerRepository.findBySocialIdAndLoginProvider(socialId, loginProvider);
         if (loginCustomer == null) {
-            loginCustomer = customerRepository.save(new Customer(socialName, socialId, loginProvider));
+            loginCustomer = customerRepository.save(new User(socialName, socialId, loginProvider));
         }
 
         JwtToken jwtToken = jwtProvider.createTotalToken(loginCustomer.getId(), loginCustomer.getUserRole());

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorDefine {
+    TOO_MANY_REQUESTS("3000", HttpStatus.TOO_MANY_REQUESTS, "Too Many Requests: many request"),
     // Bad Request
     INVALID_ARGUMENT("4000", HttpStatus.BAD_REQUEST, "Bad Request: Invalid Arguments"),
     NOT_END_POINT("4001",HttpStatus.BAD_REQUEST , "Bad Request: Not Exist End Point Error"),

@@ -27,7 +27,7 @@ public class CustomerItemController {
             @RequestParam(name = "size", defaultValue = "3") Integer size,
             @RequestParam(name = "latest", defaultValue = "desc") String latest,
             @RequestParam(name = "price", defaultValue = "desc") String price,
-            @RequestParam(name = "searchName", required = false) String searchName
+            @RequestParam(name = "searchName", defaultValue = " ") String searchName
     ){
         return new ResponseDto<>(customerItemService.selectCustomerItem(page, size, latest, price, searchName));
     }
