@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
 public class CustomerItemController {
     private final CustomerItemService customerItemService;

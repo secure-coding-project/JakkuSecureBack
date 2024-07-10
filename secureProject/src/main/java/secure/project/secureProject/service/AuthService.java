@@ -33,7 +33,6 @@ public class AuthService {
     public LoginDto socialLogin(String authCode, LoginProvider loginProvider) {
         String socialId = null;
         String socialName = null;
-
         switch (loginProvider) {
             case KAKAO:
                 String kakaoAccessToken = oauth2Util.getKakaoAccessToken(authCode);
@@ -64,7 +63,7 @@ public class AuthService {
         loginCustomer.setLogin(jwtToken.getRefreshToken());
 
         LoginDto loginDto = LoginDto.builder()
-                .username(loginCustomer.getNickname())
+                .username(loginCustomer.getSocialName())
                 .access_token(jwtToken.getAccessToken())
                 .refresh_token(jwtToken.getRefreshToken())
                 .build();

@@ -21,26 +21,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30, updatable = false)
     private String loginId;
 
-    @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false)
     private Long point;
 
-    @Column(nullable = false, length = 10)
     private String nickname;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @Column(nullable = false)
     private LocalDate createAt;
 
-    @Column(nullable = false)
     private LocalDate updateAt;
 
     @Column

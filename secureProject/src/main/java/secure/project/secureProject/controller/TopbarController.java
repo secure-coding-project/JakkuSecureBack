@@ -10,7 +10,7 @@ import secure.project.secureProject.dto.response.ResponseDto;
 import secure.project.secureProject.util.SecurityUtil;
 
 @RestController
-@RequestMapping("/topbar")
+@RequestMapping("/api/v1/topbar")
 @RequiredArgsConstructor
 public class TopbarController {
     private final SecurityUtil securityUtil;

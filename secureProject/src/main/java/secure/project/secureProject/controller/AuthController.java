@@ -21,6 +21,7 @@ public class AuthController {
     // 소셜 로그인 - 소비자
     @PostMapping("/customers/kakao")
     public ResponseDto<LoginDto> byKakao(@RequestParam("code") String code) {
+        System.err.println("asdf"+ code);
         return new ResponseDto<>(authService.socialLogin(code, LoginProvider.KAKAO));
     }
 
@@ -29,11 +30,10 @@ public class AuthController {
         return new ResponseDto<>(authService.socialLogin(code, LoginProvider.NAVER));
     }
 
-    @PostMapping("/customers/google")
+    @GetMapping("/customers/google")
     public ResponseDto<LoginDto> byGoogle(@RequestParam("code") String code) {
         return new ResponseDto<>(authService.socialLogin(code, LoginProvider.GOOGLE));
     }
-
 
     @PostMapping("/customers/reissue")
     public ResponseDto<Map<String, String>> reissueCustomer(HttpServletRequest request) {

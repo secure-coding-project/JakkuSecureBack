@@ -68,6 +68,7 @@ public class Oauth2Util {
     public String getKakaoAccessToken(String authCode) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        System.err.println("asdfasdfasdfasdfasdfasdfasdfasfd");
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
@@ -180,6 +181,7 @@ public class Oauth2Util {
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         HttpEntity<MultiValueMap<String, String>> profileRequest = new HttpEntity<>(httpHeaders);
+        System.err.println(profileRequest);
         ResponseEntity<String> response = restTemplate.exchange(
                 GOOGLE_USERINFO_URL,
                 HttpMethod.GET,
@@ -187,9 +189,11 @@ public class Oauth2Util {
                 String.class
         );
 
+        System.err.println("response에 대한 "+response.getBody());
         JsonObject element = JsonParser.parseString(response.getBody()).getAsJsonObject();
+        System.err.println("element에 대한 "+ element);
         return new Oauth2Info(
-                element.get("id").getAsString(),
+                element.get("sub").getAsString(),
                 element.get("name").getAsString()
         );
     }

@@ -24,13 +24,13 @@ public class JwtProvider implements InitializingBean {
     private final UserRepository customerRepository;
 
     @Value("${jwt.secret}")
-    private final String secretKey;
+    private String secretKey;
 
     @Value("${jwt.accessExpiredMs}")
-    private final Long accessExpiredMs;
+    private Long accessExpiredMs;
 
     @Value("${jwt.refreshExpiredMs}")
-    private final Long refreshExpiredMs;
+    private Long refreshExpiredMs;
     private Key key;
 
     @Override
@@ -63,6 +63,7 @@ public class JwtProvider implements InitializingBean {
 
     public String reissueToken(HttpServletRequest request, UserRole role) {
         String refreshToken = refineToken(request);
+        System.err.println("refresh      "+refreshToken+"   흠...");
         Long userId = getUserId(refreshToken);
         UserLoginForm user;
         switch (role) {
